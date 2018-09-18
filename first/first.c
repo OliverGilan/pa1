@@ -1,8 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
+#include <string.h>
 
 int numberCount;
 FILE *input;
+
+void seperateEvenOdd(int numbers[], int size);
 
 int main(int argc, char** argv)
 {
@@ -26,25 +30,53 @@ int main(int argc, char** argv)
 
     //Gets item count from file and creates array
     rewind(input);
-    int count = fgetc(input);
-    printf("COUNT: %d \n", count);
-    int array[count];
+    char count = fgetc(input);
+    numberCount = count - '0';
+    printf("COUNT: %d \n", numberCount);
+    int array[numberCount];
+    memset(array, 0, numberCount);
     
     //Reads each character and adds it as integer to array
-    for(int i = 0; i<count;i++){
-        int c = (int) fgetc(input);
-        if(feof(input)){
-            break;
-        }else{
-            array[i] = c;
-        }
+    for(int i = 0; i < numberCount; i++){
+        fscanf(input, "%d", &array[i]);
     }
-
+    
     //Closes file
     fclose(input);
 
-    for(int i=0;i<argc;i++){
-        printf("#%d is %s \n", i, argv[i]);
+
+    //Call function to seperate even and odd numbers
+    seperateEvenOdd(array, numberCount);
+
+    for(int i=0;i<numberCount;i++){
+        printf("Array[%d] is %d \n", i, array[i]);
     }
     return 0;
+}
+
+void seperateEvenOdd(int numbers[],int size){
+    //Separate evens and odds
+
+    int *odd = calloc(size, sizeof(int));
+    int *even = calloc(size, sizeof(int));
+
+    int j=0;
+    int k=0;
+
+    for(int i=0; i<size;i++){
+        if(numbers[i]%2==0){
+            even[j]=numbers[i];
+            j++;
+        }else{
+            odd[k]=numbers[i];
+            k++;
+        }
+    }
+
+    for(int i=0;i<j;i++){
+        printf("E[%d] is %d \n", i, even[i]);
+    }
+    for(int i=0;i<k;i++){
+        printf("O[%d] is %d \n", i, odd[i]);
+    }
 }
