@@ -27,14 +27,13 @@ int main(int argc, char** argv)
         printf("Could not open file!");
         return 1;
     }else{
-        printf("File Opened \n");
+        // printf("File Opened \n");
     }
 
     //Gets item count from file and creates array
     rewind(input);
     char count = fgetc(input);
     numberCount = count - '0';
-    printf("COUNT: %d \n", numberCount);
     int *array = calloc(numberCount, sizeof(int));
     
     //Reads each character and adds it as integer to array
@@ -50,11 +49,18 @@ int main(int argc, char** argv)
     //Returns sorted array of all numbers
     array = seperateEvenOdd(array, numberCount);
 
+
+    //PRINTS SOLUTION
     for(int i=0;i<numberCount;i++){
-        printf("Seperated Array[%d] is %d \n", i, array[i]);
+        printf("%d \t", array[i]);
     }
+    printf("\n");
     return 0;
 }
+
+
+
+
 //Separate evens and odds
 int * seperateEvenOdd(int *numbers,int size){
 
@@ -95,13 +101,11 @@ int * seperateEvenOdd(int *numbers,int size){
     //Combines both sorted arrays back into one array
     for(int i=0; i<j;i++){
         numbers[i]=even[i];
-        printf("Numbers[i]= %d \n", numbers[i]);
     }
     int l = 0;
     for(int i=j; i<j+k;i++){
         numbers[i]=odd[l];
         l++;
-        printf("Numbers[i]=%d \n", numbers[i]);
     }
 
     return numbers;
