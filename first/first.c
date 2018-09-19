@@ -6,7 +6,9 @@
 int numberCount;
 FILE *input;
 
-void seperateEvenOdd(int numbers[], int size);
+int * seperateEvenOdd(int numbers[], int size);
+int * sort(int *numbers, int *size);
+void swap(int *a, int *b);
 
 int main(int argc, char** argv)
 {
@@ -33,8 +35,7 @@ int main(int argc, char** argv)
     char count = fgetc(input);
     numberCount = count - '0';
     printf("COUNT: %d \n", numberCount);
-    int array[numberCount];
-    memset(array, 0, numberCount);
+    int *array = calloc(numberCount, sizeof(int));
     
     //Reads each character and adds it as integer to array
     for(int i = 0; i < numberCount; i++){
@@ -46,25 +47,26 @@ int main(int argc, char** argv)
 
 
     //Call function to seperate even and odd numbers
-    seperateEvenOdd(array, numberCount);
+    //Returns sorted array of all numbers
+    array = seperateEvenOdd(array, numberCount);
 
     for(int i=0;i<numberCount;i++){
-        printf("Array[%d] is %d \n", i, array[i]);
+        printf("Seperated Array[%d] is %d \n", i, array[i]);
     }
     return 0;
 }
-
-void seperateEvenOdd(int numbers[],int size){
-    //Separate evens and odds
+//Separate evens and odds
+int * seperateEvenOdd(int *numbers,int size){
 
     int *odd = calloc(size, sizeof(int));
     int *even = calloc(size, sizeof(int));
 
-    int j=0;
-    int k=0;
+    int j=0;    //even counter
+    int k=0;    //odd counter
 
+    //Separates the even and odd numbers into separate arrays
     for(int i=0; i<size;i++){
-        if(numbers[i]%2==0){
+        if(numbers[i]%2==0 && numbers[i] != 0){
             even[j]=numbers[i];
             j++;
         }else{
@@ -73,10 +75,53 @@ void seperateEvenOdd(int numbers[],int size){
         }
     }
 
-    for(int i=0;i<j;i++){
-        printf("E[%d] is %d \n", i, even[i]);
+    // for(int i=0;i<j;i++){
+    //     printf("E[%d] is %d, j = %d \n", i, even[i], j);
+    // }
+    // for(int i=0;i<k;i++){
+    //     printf("O[%d] is %d, k = %d \n", i, odd[i], k);
+    // }
+
+    even = sort(even, &j);
+    odd = sort(odd, &k);
+
+    // for(int i=0;i<j;i++){
+    //     printf("Sorted Even[%d] is %d, j = %d \n", i, even[i], j);
+    // }
+    // for(int i=0;i<k;i++){
+    //     printf("Sorted Odd[%d] is %d, k = %d \n", i, odd[i], k);
+    // }
+
+    //Combines both sorted arrays back into one array
+    for(int i=0; i<j;i++){
+        numbers[i]=even[i];
+        printf("Numbers[i]= %d \n", numbers[i]);
     }
-    for(int i=0;i<k;i++){
-        printf("O[%d] is %d \n", i, odd[i]);
+    int l = 0;
+    for(int i=j; i<j+k;i++){
+        numbers[i]=odd[l];
+        l++;
+        printf("Numbers[i]=%d \n", numbers[i]);
     }
+
+    return numbers;
+}
+
+//Sorts a given array in ascending order using bubble sort
+int * sort(int *numbers, int *size){
+    for(int i=0; i<*size;i++){
+        for(int j=0; j<*size-1;j++){
+            if(numbers[j] > numbers[j+1]){
+                swap(&numbers[i],&numbers[i+1]);
+            }
+        }
+    }
+    return numbers;
+}
+
+//Swaps two array index values
+void swap(int *a, int *b){
+    int temp = *a;
+    *a = *b;
+    *b = temp;
 }
