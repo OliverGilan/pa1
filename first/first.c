@@ -7,8 +7,8 @@ int numberCount;
 FILE *input;
 
 int * seperateEvenOdd(int numbers[], int size);
-int * sort(int *numbers, int *size);
-void swap(int *a, int *b);
+int * sort(int *, int *);
+void swap(int *, int *);
 
 int main(int argc, char** argv)
 {
@@ -55,6 +55,7 @@ int main(int argc, char** argv)
         printf("%d \t", array[i]);
     }
     printf("\n");
+    free(array);
     return 0;
 }
 
@@ -107,7 +108,8 @@ int * seperateEvenOdd(int *numbers,int size){
         numbers[i]=odd[l];
         l++;
     }
-
+    free(even);
+    free(odd);
     return numbers;
 }
 
