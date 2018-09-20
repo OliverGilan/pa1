@@ -82,22 +82,11 @@ int * seperateEvenOdd(int *numbers,int size){
         }
     }
 
-    // for(int i=0;i<j;i++){
-    //     printf("E[%d] is %d, j = %d \n", i, even[i], j);
-    // }
-    // for(int i=0;i<k;i++){
-    //     printf("O[%d] is %d, k = %d \n", i, odd[i], k);
-    // }
 
+    //Sort both arrays
     even = sort(even, &j);
     odd = sort(odd, &k);
 
-    // for(int i=0;i<j;i++){
-    //     printf("Sorted Even[%d] is %d, j = %d \n", i, even[i], j);
-    // }
-    // for(int i=0;i<k;i++){
-    //     printf("Sorted Odd[%d] is %d, k = %d \n", i, odd[i], k);
-    // }
 
     //Combines both sorted arrays back into one array
     for(int i=0; i<j;i++){

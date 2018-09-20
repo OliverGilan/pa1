@@ -19,11 +19,9 @@ int main(int argc, char** argv){
     if(file == NULL){
         printf("%s", "error");
         return 0;
-    }else{
-        // printf("%s\n","OPENED");
     }
+
     while(fscanf(file, "%c %d ", &c, &d) == 2){
-        // printf("%c %d \n", c, d);
         if(c == 'i'){
             struct listnode *ptr = head;
             struct listnode *prev = NULL;
@@ -44,8 +42,6 @@ int main(int argc, char** argv){
                         node->next = ptr;
                         prev->next = node;
                     }
-                    // prev=ptr;
-                    // ptr=ptr->next;
                 }
                 if(ptr == NULL){
                     prev->next = node;
@@ -70,12 +66,6 @@ int main(int argc, char** argv){
             }
             nodeNum--;
         }
-        // struct listnode *cheese=head;
-        // while(cheese != NULL){
-        //     printf("%d ->",cheese->value);
-        //     cheese=cheese->next;
-        // }
-        // printf("\nNodes:%d  head: %d\n", nodeNum, head->value);
     }
 
     fclose(file);
