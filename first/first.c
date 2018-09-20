@@ -52,7 +52,7 @@ int main(int argc, char** argv)
 
     //PRINTS SOLUTION
     for(int i=0;i<numberCount;i++){
-        printf("%d \t", array[i]);
+        printf("%d\t", array[i]);
     }
     printf("\n");
     free(array);
