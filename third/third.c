@@ -13,6 +13,7 @@ struct hash{
 
 void insert(struct hash*, int);
 void search(struct hash*, int);
+void clean(struct hash*);
 
 int main(int argc, char** argv){
     //Creates hashmap
@@ -32,16 +33,17 @@ int main(int argc, char** argv){
 
     //Read file
     while(fscanf(file, "%c %d ", &c, &value) == 2){
-        printf("%c  %d \n", c, value);
+        // printf("%c  %d \n", c, value);
         if(c=='i'){
             insert(map, value);
         }
-        // else if(c=='s'){
-        //     search(map, &value);
-        // }
+        else if(c=='s'){
+            search(map, value);
+        }
     }
     fclose(file);
-    printf("back");
+
+    clean(map);
 
     return 0;
 }
@@ -67,19 +69,19 @@ void insert(struct hash *map, int key){
 }
 
 void search(struct hash* map, int key){
-    // int index = *key % 10000;
-    // // printf("%p", &map[index]);
-    // if(&map[index] == NULL){
-    //     printf("absent \n");
-    //     return;
-    // }
-    // struct listnode *ptr = &map[index];
-    // while(ptr != NULL){
-    //     if(ptr->value == *key){
-    //         printf("present \n");
-    //         return;
-    //     }
-    //     ptr=ptr->next;
-    // }
-    // printf("absent \n");
+    int index = key % 10000;
+    struct listnode *list = map->list[index];
+    struct listnode *ptr = list;
+    while(ptr){
+        if(ptr->value==key){
+            printf("present \n");
+            return;
+        }
+        ptr=ptr->next;
+    }
+    printf("absent \n");
+}
+
+void clean(struct hash* map){
+    free(map);
 }
