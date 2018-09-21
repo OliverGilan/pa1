@@ -6,14 +6,23 @@ struct listnode{
     struct listnode *next;
 };
 
-void insert(struct listnode*, int);
-void search(struct listnode, int);
+struct hash{
+    int size;
+    struct listnode **list;
+};
+
+void insert(struct hash*, int);
+void search(struct hash*, int);
 
 int main(int argc, char** argv){
-    struct listnode *map[10000];
+    //Creates hashmap
+    struct hash *map = (struct hash *)malloc(sizeof(struct hash *));
+    //Initializes size to 10,000
+    map->size = 10000;
+    map->list = (struct listnode**)malloc(map->size*sizeof(struct listnode *));
+
     char c;
     int value;
-
     //Opens file
     FILE* file = fopen(argv[1], "r");
     if(file == NULL){
@@ -23,39 +32,54 @@ int main(int argc, char** argv){
 
     //Read file
     while(fscanf(file, "%c %d ", &c, &value) == 2){
+        printf("%c  %d \n", c, value);
         if(c=='i'){
             insert(map, value);
-        }else if(c=='s'){
-            
         }
-
+        // else if(c=='s'){
+        //     search(map, &value);
+        // }
     }
+    fclose(file);
+    printf("back");
 
     return 0;
 }
 
-void insert(struct listnode *map, int key){
+void insert(struct hash *map, int key){
     int index = key % 10000;
-    if(&map[index] == NULL){
-        struct listnode *node = (struct listnode *) malloc(1*sizeof(struct listnode *));
-        map[index] = *node;
-        printf("inserted");
-    }else{
-        struct listnode *ptr = &map[index];
-        while(ptr!= NULL){
-            if(ptr->value == key){
-                printf("duplicate");
-                return;
-            }
-            ptr = ptr->next;
+    // printf("%d \n", map[index].value);
+    struct listnode *list = map->list[index];
+    struct listnode *ptr = list;
+    //Check for duplicate
+    while(ptr){
+        if(ptr->value == key){
+            printf("duplicate \n");
+            return;
         }
-        struct listnode *node = (struct listnode *) malloc(1*sizeof(struct listnode *));
-        node->next = &map[index];
-        map[index] = *node;
-        printf("inserted");
+        ptr=ptr->next;
     }
+    struct listnode *node = (struct listnode *)malloc(sizeof(struct listnode *));
+    node->value=key;
+    node->next=list;
+    map->list[index]=node;
+    printf("inserted \n");
 }
 
-// void search(struct hash* map, int key){
-
-// }
+void search(struct hash* map, int key){
+    // int index = *key % 10000;
+    // // printf("%p", &map[index]);
+    // if(&map[index] == NULL){
+    //     printf("absent \n");
+    //     return;
+    // }
+    // struct listnode *ptr = &map[index];
+    // while(ptr != NULL){
+    //     if(ptr->value == *key){
+    //         printf("present \n");
+    //         return;
+    //     }
+    //     ptr=ptr->next;
+    // }
+    // printf("absent \n");
+}
