@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void clean(int x, int y, int [x][y]);
+void clean(int **, int, int);
 
 int main(int argc, char **argv){
     FILE *input = fopen(argv[1], "r");
@@ -24,11 +24,11 @@ int main(int argc, char **argv){
         }
     }
 
-    for(int i=0;i<a;i++){
-        for(int j = 0; j<b;j++){
-            printf("matrixOne[%d][%d] = %d\n", i, j, matrixOne[i][j]);
-        }
-    }
+    // for(int i=0;i<a;i++){
+    //     for(int j = 0; j<b;j++){
+    //         printf("matrixOne[%d][%d] = %d\n", i, j, matrixOne[i][j]);
+    //     }
+    // }
 
     //second matrix
     int c, d;
@@ -48,15 +48,16 @@ int main(int argc, char **argv){
 
     if(b!=c){
         printf("bad-matrix\n");
-        // clean(c, d, matrixTwo);
+        clean(matrixOne, c, d);
+        clean(matrixTwo, c, d);
         return 0;
     }
 
-    for(int i=0;i<c;i++){
-        for(int j = 0; j<d;j++){
-            printf("matrix2[%d][%d] = %d\n", i, j, matrixTwo[i][j]);
-        }
-    }
+    // for(int i=0;i<c;i++){
+    //     for(int j = 0; j<d;j++){
+    //         printf("matrix2[%d][%d] = %d\n", i, j, matrixTwo[i][j]);
+    //     }
+    // }
 
     //Multiply matrices
     int **mtx = malloc(a*sizeof(*mtx));
@@ -73,17 +74,16 @@ int main(int argc, char **argv){
         }
         printf("\n");
     }
-    // clean(a, b, matrixOne);
-    // clean(c, d, matrixTwo);
-    // clean(a, d, mtx);
+    clean(matrixOne, a, b);
+    clean(matrixTwo, c, d);
+    clean(mtx, a, d);
 
     return 0;
 }
 
-void clean(int x, int y, int matrix[x][y]){
+void clean(int **matrix, int x, int y){
     for(int i=0;i<x;i++){
-        for(int j = 0; j<y;j++){
-            
-        }
+        free(matrix[i]);
     }
+    free(matrix);
 }
