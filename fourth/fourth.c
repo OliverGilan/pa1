@@ -12,31 +12,35 @@ int main(int argc, char **argv){
     //first matrix
     int a, b;
     fscanf(input, "%d %d", &a, &b);
-    int matrixOne[a][b];
+    // int matrixOne[a][b];
+    int **matrixOne = malloc(a*sizeof(*matrixOne));
     for(int i = 0; i<a;i++){
+        matrixOne[i] = malloc(b*sizeof(*matrixOne[i]));
         for(int j = 0; j<b;j++){
             //Allocates and reads file into array spot
-            matrixOne[i][j] = (int)malloc(1*sizeof(int));
+            // matrixOne[i][j] = (int)malloc(1*sizeof(int));
             fscanf(input, "%d", &matrixOne[i][j]);
             // printf("%d", matrixOne[i][j]);
         }
     }
 
-    // for(int i=0;i<a;i++){
-    //     for(int j = 0; j<b;j++){
-    //         printf("matrixOne[%d][%d] = %d\n", i, j, matrixOne[i][j]);
-    //     }
-    // }
+    for(int i=0;i<a;i++){
+        for(int j = 0; j<b;j++){
+            printf("matrixOne[%d][%d] = %d\n", i, j, matrixOne[i][j]);
+        }
+    }
 
     //second matrix
     int c, d;
     fscanf(input, "%d %d", &c, &d);
-    int matrixTwo[c][d];
+    // int matrixTwo[c][d];
+    int **matrixTwo = malloc(c*sizeof(*matrixTwo));
     // printf("CD: %d %d\n", c, d);
     for(int i = 0; i<c;i++){
+        matrixTwo[i] = malloc(d*sizeof(*matrixTwo[i]));
         for(int j = 0; j<d;j++){
             //Allocates and reads file into array spot
-            matrixTwo[i][j] = (int)malloc(1*sizeof(int));
+            // matrixTwo[i][j] = (int)malloc(1*sizeof(int));
             fscanf(input, "%d", &matrixTwo[i][j]);
             // printf("%d", matrixTwo[i][j]);
         }
@@ -44,21 +48,22 @@ int main(int argc, char **argv){
 
     if(b!=c){
         printf("bad-matrix\n");
-        clean(c, d, matrixTwo);
+        // clean(c, d, matrixTwo);
         return 0;
     }
 
-    // for(int i=0;i<c;i++){
-    //     for(int j = 0; j<d;j++){
-    //         printf("matrix2[%d][%d] = %d\n", i, j, matrixTwo[i][j]);
-    //     }
-    // }
+    for(int i=0;i<c;i++){
+        for(int j = 0; j<d;j++){
+            printf("matrix2[%d][%d] = %d\n", i, j, matrixTwo[i][j]);
+        }
+    }
 
     //Multiply matrices
-    int mtx[a][d];
+    int **mtx = malloc(a*sizeof(*mtx));
     for(int i = 0; i<a;i++){
+        mtx[i] = malloc(d*sizeof(*mtx[i]));
         for(int j=0;j<d;j++){
-            mtx[i][j] = (int)malloc(1*sizeof(int));
+            // mtx[i][j] = (int)malloc(1*sizeof(int));
             int z = 0;
             for(int k=0;k<c;k++){
                 z += matrixOne[i][k] * matrixTwo[k][j];
@@ -68,9 +73,9 @@ int main(int argc, char **argv){
         }
         printf("\n");
     }
-    clean(a, b, matrixOne);
-    clean(c, d, matrixTwo);
-    clean(a, d, mtx);
+    // clean(a, b, matrixOne);
+    // clean(c, d, matrixTwo);
+    // clean(a, d, mtx);
 
     return 0;
 }
