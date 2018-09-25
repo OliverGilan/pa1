@@ -4,7 +4,8 @@
 
 int main(int argc, char **argv){
     for(int i=1;i<argc;i++){
-        char *string = malloc(1*sizeof(strlen(argv[i])));
+        // char *string = malloc(1*sizeof(strlen(argv[i])));
+        char *string;
         string = argv[i];
         // printf("STRING: %s \n", string);
         if(*argv[i] == 'a' || *argv[i] == 'e' || *argv[i] == 'i' || *argv[i] == 'o' || *argv[i] == 'u'){
@@ -16,6 +17,7 @@ int main(int argc, char **argv){
                 strcat(new, add);
             }
             printf("%s ", new);
+            free(new);
         }else{
             char *add="ay";
             char *ptr = &string[0];
@@ -40,6 +42,7 @@ int main(int argc, char **argv){
             // strcat(string, temp);
             // strcat(string, add);
             printf("%s ", temp);
+            free(new);
         }
         // printf("CHARACTER: %c\n", string[0]);
     }
