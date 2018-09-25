@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+//TAKE CARE OF NEGATIVE NUMBERS with HASH FUNCTION
+
 struct listnode{
     int value;
     struct listnode *next;
