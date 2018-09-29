@@ -9,9 +9,11 @@ struct node{
     struct node *parent;
 };
 
-void search(struct node*, int, char, int);
+int search(struct node*, int, char, int);
 struct node* insert(struct node*, struct node *, int, int);
-void delete(struct node*, struct node*);
+void delete(struct node*, struct node*, int);
+void deleteChild(struct node*, struct node*, int);
+struct node* findMin(struct node *);
 
 int main(int argc, char **argv){
     FILE *input;
@@ -32,11 +34,21 @@ int main(int argc, char **argv){
                 insert(root, NULL, 1, v);
             }
         }else if(c=='s'){
-            search(root, 1, c, v);
+            int r = search(root, 1, c, v);
+            if(r == 0){
+                printf("absent\n");
+            }else{
+                printf("present %d\n", r);
+            }
+        }else if(c=='d'){
+            int r = search(root, 1, c, v);
+            if(r == 0){
+                printf("fail\n");
+            }else{
+                delete(root, NULL, v);
+            }
         }
     }
-
-    
 
     return 0;
 }
@@ -61,21 +73,90 @@ struct node *insert(struct node *node, struct node *parent,int height, int value
     return node;
 }
 
-void search(struct node* root, int height, char c, int value){
+int search(struct node* root, int height, char c, int value){
+    int r = 0;
     if(root == NULL){
-        printf("absent\n");
-        return;
+        // printf("absent\n");
+        return 0;
     }else if(root->value == value){
-        printf("present %d\n", height);
-        return;
+        // printf("present %d\n", height);
+        return height;
     }else if(root->value > value){
-        search(root->left, height+1, c, value);
+        r = search(root->left, height+1, c, value);
     }else if(root->value < value){
-        search(root->right, height+1, c, value);
+        r = search(root->right, height+1, c, value);
     }
-    return;
+    return r;
 }
 
-void delete(struct node* node, struct node* parent){
+void delete(struct node* node, struct node* parent, int value){
+    if(node != NULL){
+        // printf("%d -> ", node->value);
+        if(node->value == value){
+            if(node->right != NULL && node ->left != NULL){
+                struct node* minimum = findMin(node->right);
+                node->value = minimum->value;
+                deleteChild(node->right, node, node->right->value);
+                node->right = NULL;
+                printf("success\n");
+                return;
+            }if(node->right == NULL){
+                if(parent->value > value)
+                    parent->left = node->left;
+                else
+                    parent->right = node->left;
+                printf("success\n");
+                return;
+            }else{
+                if(parent->value > value)
+                    parent->left = node->right;
+                else
+                    parent->right = node->right;
+                printf("success\n");
+                return;
+            }
+        }
+    }else{
+        return;
+    }
+    delete(node->left, node, value);
+    delete(node->right, node, value);
+}
 
+struct node* findMin(struct node * root){
+    while(root->left != NULL){
+        root = root->left;
+    }
+    return root;
+}
+
+void deleteChild(struct node* node, struct node* parent, int value){
+    if(node != NULL){
+        // printf("%d -> ", node->value);
+        if(node->value == value){
+            if(node->right != NULL && node ->left != NULL){
+                struct node* minimum = findMin(node->right);
+                node->value = minimum->value;
+                delete(node->right, node, node->right->value);
+                node->right = NULL;
+                return;
+            }if(node->right == NULL){
+                if(parent->value > value)
+                    parent->left = node->left;
+                else
+                    parent->right = node->left;
+                return;
+            }else{
+                if(parent->value > value)
+                    parent->left = node->right;
+                else
+                    parent->right = node->right;
+                return;
+            }
+        }
+    }else{
+        return;
+    }
+    delete(node->left, node, value);
+    delete(node->right, node, value);
 }
