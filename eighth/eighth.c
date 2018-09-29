@@ -9,7 +9,7 @@ struct node{
     struct node *left;
 };
 
-struct node* search(struct node*, int, char, int);
+void search(struct node*, int, char, int);
 // struct node* insert(struct node*, struct node *, int, int);
 struct node* insert(struct node*, int, int);
 
@@ -146,17 +146,17 @@ struct node *insert(struct node *node, int height, int value){
 //     return root;
 // }
 
-struct node * search(struct node* root, int height, char c, int value){
-    // if(root == NULL){
-    //     printf("absent\n");
-    //     return NULL;
-    // }else if(root->value == value){
-    //     printf("present %d\n", height);
-    //     return root;
-    // }else if(root->value > value){
-    //     return search(root->left, height+1, c, value);
-    // }else if(root->value < value){
-    //     return search(root->right, height+1, c, value);
-    // }
-    return root;
+void search(struct node* root, int height, char c, int value){
+    if(root == NULL){
+        printf("absent\n");
+        return;
+    }else if(root->value == value){
+        printf("present %d\n", height);
+        return;
+    }else if(root->value > value){
+        search(root->left, height+1, c, value);
+    }else if(root->value < value){
+        search(root->right, height+1, c, value);
+    }
+    return;
 }
