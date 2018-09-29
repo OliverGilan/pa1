@@ -47,7 +47,7 @@ int main(int argc, char **argv){
     }
 
     if(b!=c){
-        printf("bad-matrix\n");
+        printf("bad-matrices\n");
         clean(matrixOne, c, d);
         clean(matrixTwo, c, d);
         return 0;

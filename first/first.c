@@ -7,7 +7,7 @@ int numberCount;
 FILE *input;
 
 int * seperateEvenOdd(int numbers[], int size);
-int * sort(int *, int *);
+int * sort(int *, int);
 void swap(int *, int *);
 
 int main(int argc, char** argv)
@@ -26,8 +26,6 @@ int main(int argc, char** argv)
     if(input == NULL){
         printf("Could not open file!\n");
         return 1;
-    }else{
-        // printf("File Opened \n");
     }
 
     //Gets item count from file and creates array
@@ -73,7 +71,7 @@ int * seperateEvenOdd(int *numbers,int size){
 
     //Separates the even and odd numbers into separate arrays
     for(int i=0; i<size;i++){
-        if(numbers[i]%2==0 && numbers[i] != 0){
+        if(numbers[i]%2==0){
             even[j]=numbers[i];
             j++;
         }else{
@@ -82,11 +80,22 @@ int * seperateEvenOdd(int *numbers,int size){
         }
     }
 
-
+    // for(int i=0; i<size; i++){
+    //     printf("EVEN: %d\n", even[i]);
+    // }
+    // for(int i=0; i<size; i++){
+    //     printf("ODD: %d\n", odd[i]);
+    // }
     //Sort both arrays
-    even = sort(even, &j);
-    odd = sort(odd, &k);
+    even = sort(even, j);
+    odd = sort(odd, k);
 
+    // for(int i=0; i<size; i++){
+    //     printf("EVEN: %d\n", even[i]);
+    // }
+    // for(int i=0; i<size; i++){
+    //     printf("ODD: %d\n", odd[i]);
+    // }
 
     //Combines both sorted arrays back into one array
     for(int i=0; i<j;i++){
@@ -103,11 +112,13 @@ int * seperateEvenOdd(int *numbers,int size){
 }
 
 //Sorts a given array in ascending order using bubble sort
-int * sort(int *numbers, int *size){
-    for(int i=0; i<*size;i++){
-        for(int j=0; j<*size-1;j++){
+int * sort(int *numbers, int size){
+
+    for(int i=0; i<size-1;i++){
+        for(int j=0; j<size-i-1;j++){
             if(numbers[j] > numbers[j+1]){
-                swap(&numbers[i],&numbers[i+1]);
+                swap(&numbers[j],&numbers[j+1]);
+                // printf("SWAP %d <-> %d", numbers[j], numbers[j+1]);
             }
         }
     }
