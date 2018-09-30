@@ -14,6 +14,9 @@ struct node* insert(struct node*, struct node *, int, int);
 void delete(struct node*, struct node*, int);
 void deleteChild(struct node*, struct node*, int);
 struct node* findMin(struct node *);
+void clean(struct node*);
+
+struct node* root = NULL;
 
 int main(int argc, char **argv){
     FILE *input;
@@ -23,7 +26,7 @@ int main(int argc, char **argv){
         return 0;
     }
 
-    struct node* root = NULL;
+    // struct node* root = NULL;
     char c;
     int v;
     while(fscanf(input, "%c %d ", &c, &v) == 2){
@@ -47,8 +50,11 @@ int main(int argc, char **argv){
             }else{
                 delete(root, NULL, v);
             }
+            // printf("ROOT: %d\n", root->value);
         }
     }
+
+    clean(root);
 
     return 0;
 }
@@ -96,22 +102,40 @@ void delete(struct node* node, struct node* parent, int value){
             if(node->right != NULL && node ->left != NULL){
                 struct node* minimum = findMin(node->right);
                 node->value = minimum->value;
-                deleteChild(node->right, node, node->right->value);
-                node->right = NULL;
+                deleteChild(node->right, node, minimum->value);
+                // node->right = NULL;
                 printf("success\n");
                 return;
             }if(node->right == NULL){
-                if(parent->value > value)
+                if(parent == NULL){
+                    root = node->left;
+                    free(node);
+                }
+                else if(parent->value > value){
                     parent->left = node->left;
-                else
+                    free(node);
+                }
+                else{
                     parent->right = node->left;
+                    free(node);
+                }
                 printf("success\n");
                 return;
             }else{
-                if(parent->value > value)
+                if(parent == NULL){
+                    root = node->right;
+                    // printf("ROOT REASSIGNED\n");
+                    free(node);
+                    // printf("ROOT: %d\n", root->value);
+                }
+                else if(parent->value > value){
                     parent->left = node->right;
-                else
+                    free(node);
+                }
+                else{
                     parent->right = node->right;
+                    free(node);
+                }
                 printf("success\n");
                 return;
             }
@@ -131,32 +155,49 @@ struct node* findMin(struct node * root){
 }
 
 void deleteChild(struct node* node, struct node* parent, int value){
+    // printf("DELETING: %d", value); 
     if(node != NULL){
         // printf("%d -> ", node->value);
         if(node->value == value){
             if(node->right != NULL && node ->left != NULL){
                 struct node* minimum = findMin(node->right);
                 node->value = minimum->value;
-                delete(node->right, node, node->right->value);
-                node->right = NULL;
+                deleteChild(node->right, node, minimum->value);
+                // node->right = NULL;
                 return;
             }if(node->right == NULL){
-                if(parent->value > value)
+                if(parent->value > value){
                     parent->left = node->left;
-                else
+                    free(node);
+                }
+                else{
                     parent->right = node->left;
+                    free(node);
+                }
                 return;
             }else{
-                if(parent->value > value)
+                if(parent->value > value){
                     parent->left = node->right;
-                else
+                    free(node);
+                }
+                else{
                     parent->right = node->right;
+                    free(node);
+                }
                 return;
             }
         }
     }else{
         return;
     }
-    delete(node->left, node, value);
-    delete(node->right, node, value);
+    deleteChild(node->left, node, value);
+    deleteChild(node->right, node, value);
+}
+
+void clean(struct node *root){
+    if(root==NULL)
+        return;
+    clean(root->left);
+    clean(root->right);
+    free(root);
 }

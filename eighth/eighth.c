@@ -12,6 +12,7 @@ struct node{
 void search(struct node*, int, char, int);
 // struct node* insert(struct node*, struct node *, int, int);
 struct node* insert(struct node*, int, int);
+void clean(struct node*);
 
 
 int main(int argc, char **argv){
@@ -41,7 +42,7 @@ int main(int argc, char **argv){
         // printf("%c %d\n", c, v);
     }
 
-    
+    clean(root);
 
     return 0;
 }
@@ -69,83 +70,6 @@ struct node *insert(struct node *node, int height, int value){
     return node;
 }
 
-// struct node *insert(struct node * root, struct node * prev, int height, int value){
-//     if(root == NULL){
-//         struct node * temp = (struct node*)calloc(1*sizeof(struct node), 0);
-//         temp->value = value;
-//         temp->left=NULL;
-//         temp->right=NULL;
-//         temp->height=height;
-//             printf("inserted %d\n", height);
-//             return temp;
-//         // if(prev == NULL){
-//         //     printf("inserted %d\n", height);
-//         //     return temp;
-//         // }else if(prev->value > value){
-//         //     prev->left = temp;
-//         //     printf("PREV: %d\n", prev->value);
-//         //     printf("inserted %d\n", height);
-//         //     return root;
-//         // }else if(prev->value < value){
-//         //     prev->right = temp;
-//         //     printf("PREV: %d\n", prev->value);
-//         //     printf("inserted %d\n", height);
-//         //     return root;
-//         // }
-//     }else if(root->value > value){
-//         printf("ROOT: %d\n", root->value);
-//         root->left = insert(root->left, root, height+1, value);
-//         printf("ROOTLEFT: %d\n", root->left->value);
-//     }else if(root->value < value){
-//         printf("ROOT: %d\n", root->value);
-//         root->right = insert(root->right, root, height+1, value);
-//     }else if(root->value == value){
-//         printf("duplicate");
-//     }
-//     return root;
-// }
-// struct node * insert(struct node* root, int height, char c, int value){
-//     if(root->value == 0){
-//         printf("%d\n", root->value);
-//         struct node * temp = (struct node*)calloc(1*sizeof(struct node), 0);
-//         temp->value = value;
-//         temp->left=NULL;
-//         temp->right=NULL;
-//         temp->height=1;
-//         printf("inserted %d\n", temp->height);
-//         return temp;
-//     }else{
-//         struct node* ptr = root;
-//         struct node* prev = NULL;
-//         if(ptr == NULL){
-//             struct node * temp = (struct node*)calloc(1*sizeof(struct node), 0);
-//             temp->value = value;
-//             temp->left=NULL;
-//             temp->right=NULL;
-//             temp->height=height;
-//             printf("%d\n", height);
-//             // if(prev->value > value){
-//             //     prev->left = temp;
-//             //     printf("inserted %d\n", temp->height);
-//             //     return root;
-//             // }else if(ptr->value < value){
-//             //     prev->right = temp;
-//             //     printf("inserted %d\n", temp->height);
-//             //     return root;
-//             // }
-//             return root;
-//         }else if(ptr->value == value){
-//             printf("duplicate\n");
-//             return root;
-//         }else if(ptr->value > value){
-//             return insert(root->left, height+1, c, value);
-//         }else{
-//             return insert(root->right, height+1, c, value);
-//         }
-//     }
-//     return root;
-// }
-
 void search(struct node* root, int height, char c, int value){
     if(root == NULL){
         printf("absent\n");
@@ -159,4 +83,12 @@ void search(struct node* root, int height, char c, int value){
         search(root->right, height+1, c, value);
     }
     return;
+}
+
+void clean(struct node *root){
+    if(root==NULL)
+        return;
+    clean(root->left);
+    clean(root->right);
+    free(root);
 }
