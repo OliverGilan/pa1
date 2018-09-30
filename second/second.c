@@ -31,6 +31,7 @@ int main(int argc, char** argv){
             if(head == NULL || head->value > d){
                 node->next = head;
                 head = node;
+                nodeNum++;
             }else{
                 while(ptr != NULL){
                     if(ptr->value < d){
@@ -41,13 +42,14 @@ int main(int argc, char** argv){
                     }else if(ptr->value > d){
                         node->next = ptr;
                         prev->next = node;
+                        nodeNum++;
                     }
                 }
                 if(ptr == NULL){
                     prev->next = node;
+                    nodeNum++;
                 }
             }
-            nodeNum++;
         }else if(c=='d'){
             struct listnode *ptr = head;
             struct listnode *prev = NULL;
@@ -56,15 +58,17 @@ int main(int argc, char** argv){
                     if(ptr == head){
                         head = ptr->next;
                         free(ptr);
+                        nodeNum--;
                     }else{
                         prev->next=ptr->next;
                         free(ptr);
+                        nodeNum--;
                     }
                 }
                 prev = ptr;
                 ptr = ptr->next;
             }
-            nodeNum--;
+            
         }
     }
 

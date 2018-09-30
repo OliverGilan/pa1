@@ -16,13 +16,14 @@ struct hash{
 void insert(struct hash*, int);
 void search(struct hash*, int);
 void clean(struct hash*);
+int hash(int);
 
 int main(int argc, char** argv){
     //Creates hashmap
-    struct hash *map = (struct hash *)malloc(sizeof(struct hash *));
+    struct hash *map = (struct hash *)malloc(sizeof(struct hash));
     //Initializes size to 10,000
     map->size = 10000;
-    map->list = (struct listnode**)malloc(map->size*sizeof(struct listnode *));
+    map->list = (struct listnode**)malloc(map->size*sizeof(struct listnode));
 
     char c;
     int value;
@@ -51,8 +52,8 @@ int main(int argc, char** argv){
 }
 
 void insert(struct hash *map, int key){
-    int index = key % 10000;
-    // printf("%d \n", map[index].value);
+    int index = hash(key);
+    // printf("%d \n", index);
     struct listnode *list = map->list[index];
     struct listnode *ptr = list;
     //Check for duplicate
@@ -71,7 +72,7 @@ void insert(struct hash *map, int key){
 }
 
 void search(struct hash* map, int key){
-    int index = key % 10000;
+    int index = hash(key);
     struct listnode *list = map->list[index];
     struct listnode *ptr = list;
     while(ptr){
@@ -86,4 +87,12 @@ void search(struct hash* map, int key){
 
 void clean(struct hash* map){
     free(map);
+}
+
+int hash(int key){
+    int index = key % 10000;
+    if(index < 0){
+        index = 10000-index;
+    }
+    return index;
 }

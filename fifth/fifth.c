@@ -5,6 +5,7 @@ int addRows(int **, int, int);
 int addCols(int **, int, int);
 int addDiags(int **, int, int);
 void clean(int **, int);
+int checkNums(int **, int);
 
 int main(int argc, char **argv){
     FILE* input = fopen(argv[1], "r");
@@ -48,6 +49,11 @@ int main(int argc, char **argv){
     }
 
     result = addDiags(matrix, n, rtotal);
+    if(result != 1){
+        printf("not-magic");
+        return 0;
+    }
+    result = checkNums(matrix, n);
     if(result != 1){
         printf("not-magic");
         return 0;
@@ -113,4 +119,32 @@ void clean(int **mtx, int n){
         free(mtx[i]);
     }
     free(mtx);
+}
+
+int checkNums(int **mtx, int n){
+    // printf("running\n");
+    int size = n * n;
+    int *array = (int *)malloc(size*sizeof(int));
+    int k = 0;
+    for(int i = 0; i<n; i++){
+        for(int j=0; j<n; j++){
+            array[k] = mtx[i][j];
+            k++;
+            // printf("%d\n", mtx[i][j]);
+            // printf("%d\n", array[k]);
+        }
+    }
+    // for(int i=0;i<n; i++){
+    //     for(int j=0;j<n;j++){
+
+    //     }
+    // }
+    for(int i=0; i < n*n-1; i++){
+        for(int j = i+1; j<n*n; j++){
+            if(array[i] == array[j]){
+                return 0;
+            }
+        }
+    }
+    return 1;
 }
