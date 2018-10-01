@@ -23,7 +23,7 @@ int main(int argc, char** argv){
     struct hash *map = (struct hash *)malloc(sizeof(struct hash));
     //Initializes size to 10,000
     map->size = 10000;
-    map->list = (struct listnode**)malloc(map->size*sizeof(struct listnode));
+    map->list = (struct listnode**)calloc(sizeof(struct listnode),map->size);
 
     char c;
     int value;
@@ -52,19 +52,22 @@ int main(int argc, char** argv){
 }
 
 void insert(struct hash *map, int key){
+    // printf("Running\n");
     int index = hash(key);
     // printf("%d \n", index);
     struct listnode *list = map->list[index];
     struct listnode *ptr = list;
+    // printf("Running\n");
     //Check for duplicate
-    while(ptr){
+    while(ptr != NULL){
+        // printf("ptr not null\n");
         if(ptr->value == key){
             printf("duplicate \n");
             return;
         }
         ptr=ptr->next;
     }
-    struct listnode *node = (struct listnode *)malloc(sizeof(struct listnode *));
+    struct listnode *node = (struct listnode *)malloc(sizeof(struct listnode));
     node->value=key;
     node->next=list;
     map->list[index]=node;
