@@ -22,6 +22,7 @@ int main(int argc, char** argv){
     }
 
     while(fscanf(file, "%c %d ", &c, &d) == 2){
+        // printf("%c %d\n", c, d);
         if(c == 'i'){
             struct listnode *ptr = head;
             struct listnode *prev = NULL;
@@ -43,6 +44,7 @@ int main(int argc, char** argv){
                         node->next = ptr;
                         prev->next = node;
                         nodeNum++;
+                        break;
                     }
                 }
                 if(ptr == NULL){
