@@ -5,11 +5,13 @@
 
 int main(int argc, char **argv){
     for(int i=1;i<argc;i++){
-        // char *string = malloc(1*sizeof(strlen(argv[i])));
-        char *string;
+        char *string = (char *)calloc(strlen(argv[i]), sizeof(char));
+        // char *string;
         string = argv[i];
-        // printf("STRING: %s \n", argv[i]);
-        if(tolower(*argv[i]) == 'a' || tolower(*argv[i]) == 'e' || tolower(*argv[i]) == 'i' || tolower(*argv[i]) == 'o' || tolower(*argv[i]) == 'u'){
+        // printf("STRING: %s \n", string);
+        if(tolower(string[0]) == 'a' || tolower(string[0]) == 'e' || tolower(string[0]) == 'i' 
+            || tolower(string[0]) == 'o' || tolower(string[0]) == 'u'){
+                // printf("RUNNING\n");
             char *add="yay";
             char *new = calloc(strlen(string)+strlen(add)+1, sizeof(char));
             // if((new = malloc(strlen(string)+strlen(add)+1)) != NULL){
@@ -29,26 +31,34 @@ int main(int argc, char **argv){
             // printf(" ");
             free(new);
         }else{
+            // printf("RUNNING 2\n");
             char *add="ay";
             char *ptr = &string[0];
-            char *new = calloc(2*strlen(string)+strlen(add)+1, sizeof(char));
+            char *new = (char *)calloc(2*strlen(string)+strlen(add)+1, sizeof(char));
             // if((new = malloc(2*strlen(string)+strlen(add)+1)) != NULL){
             //     new[0] = '\0';
             //     strcat(new,string);
             // }
             // printf("NEW: %s\n", new);
             strcat(new, string);
+            // printf("%s\n", new);
             int i = 0;
-            while((ptr[i] != 'a' && ptr[i] != 'e' && ptr[i] != 'i' && ptr[i] != 'o' && ptr[i] != 'u') 
+            while((tolower(ptr[i]) != 'a' && tolower(ptr[i]) != 'e' && tolower(ptr[i]) != 'i' 
+                && tolower(ptr[i]) != 'o' && tolower(ptr[i]) != 'u') 
                 && i < strlen(string)){
-                    // printf("%c ", ptr[i]);
                     char c = ptr[i];
-                    strcat(new, &c);
-                    // printf("NEWC: %s\n", ptr);
+                    // printf("C: %c\n", c);
+                    int j = 0;
+                    while(new[j] != '\0'){
+                        // printf("new[i]: %c\n", new[j]);
+                        j++;
+                    }
+                    new[j] = c;
+                    new[j+1] = '\0';
+                    // printf("NEWC: %s\n", new);
                     i++;
             }
             strcat(new, add);
-            // new[strlen(new)] = '\0';
             char *temp = &new[i];
 
             // strcat(string, temp);
