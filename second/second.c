@@ -59,18 +59,20 @@ int main(int argc, char** argv){
                 if(ptr->value == d){
                     if(ptr == head){
                         head = ptr->next;
-                        free(ptr);
+                        // free(ptr);
                         nodeNum--;
+                        break;
                     }else{
                         prev->next=ptr->next;
-                        free(ptr);
+                        // free(ptr);
                         nodeNum--;
+                        break;
                     }
                 }
                 prev = ptr;
                 ptr = ptr->next;
             }
-            
+            free(ptr);
         }
     }
 
@@ -79,9 +81,18 @@ int main(int argc, char** argv){
     struct listnode *ptr = head;
     while(ptr != NULL){
         printf("%d\t", ptr->value);
-        free(ptr);
+        // free(ptr);
         ptr = ptr->next;
     }
+    ptr = head;
+    struct listnode* prev = NULL;
+    while(ptr!= NULL){
+        if(prev != NULL){
+            free(prev);
+        }
+        prev = ptr;
+        ptr = ptr->next;
+    }free(prev);
 
     return 0;
 }
