@@ -24,7 +24,6 @@ int main(int argc, char **argv){
     }
 
     struct node* root = NULL;
-    int size = 0;
     char c;
     int v;
     while(fscanf(input, "%c %d ", &c, &v) == 2){
