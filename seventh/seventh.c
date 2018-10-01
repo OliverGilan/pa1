@@ -3,7 +3,7 @@
 #include <string.h>
 
 int main(int argc, char **argv){
-    char *temp = (char *)malloc(argc*sizeof(char *));
+    char *temp = (char *)calloc(argc,sizeof(char));
     int j = 0;
     for(int i = 1; i < argc; i++){
         char *word = argv[i];
