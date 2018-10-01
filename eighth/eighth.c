@@ -10,7 +10,6 @@ struct node{
 };
 
 void search(struct node*, int, char, int);
-// struct node* insert(struct node*, struct node *, int, int);
 struct node* insert(struct node*, int, int);
 void clean(struct node*);
 
@@ -28,17 +27,14 @@ int main(int argc, char **argv){
     int v;
     while(fscanf(input, "%c %d ", &c, &v) == 2){
         if(c=='i'){
-            // printf("VALUE: %d\n", v);
             if(root == NULL){
                 root = insert(root, 1, v);
             }else{
                 insert(root, 1, v);
             }
         }else if(c=='s'){
-            // printf("RUNNING: %d\n", v);
             search(root, 1, c, v);
         }
-        // printf("%c %d\n", c, v);
     }
 
     clean(root);
@@ -48,9 +44,6 @@ int main(int argc, char **argv){
 
 
 struct node *insert(struct node *node, int height, int value){
-    // if(node != NULL){
-    //     printf("%d -> ", node->value);
-    // }
     if(node == NULL){
         struct node * temp = (struct node*)malloc(1*sizeof(struct node));
         temp->value = value;

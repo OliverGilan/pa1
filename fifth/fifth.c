@@ -25,12 +25,6 @@ int main(int argc, char **argv){
     }
     fclose(input);
 
-    // for(int i = 0; i<n;i++){
-    //     for(int j =0; j<n;j++){
-    //         printf("%d  ", matrix[i][j]);
-    //     }
-    //     printf("\n");
-    // }
     int rtotal = 0;
     for(int i = 0; i<n; i++){
         rtotal += matrix[0][i];
@@ -122,7 +116,6 @@ void clean(int **mtx, int n){
 }
 
 int checkNums(int **mtx, int n){
-    // printf("running\n");
     int size = n * n;
     int *array = (int *)malloc(size*sizeof(int));
     int k = 0;
@@ -130,15 +123,9 @@ int checkNums(int **mtx, int n){
         for(int j=0; j<n; j++){
             array[k] = mtx[i][j];
             k++;
-            // printf("%d\n", mtx[i][j]);
-            // printf("%d\n", array[k]);
         }
     }
-    // for(int i=0;i<n; i++){
-    //     for(int j=0;j<n;j++){
 
-    //     }
-    // }
     for(int i=0; i < n*n-1; i++){
         for(int j = i+1; j<n*n; j++){
             if(array[i] == array[j]){

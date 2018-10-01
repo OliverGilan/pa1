@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-//TAKE CARE OF NEGATIVE NUMBERS with HASH FUNCTION
-
 struct listnode{
     int value;
     struct listnode *next;
@@ -36,7 +34,6 @@ int main(int argc, char** argv){
 
     //Read file
     while(fscanf(file, "%c %d ", &c, &value) == 2){
-        // printf("%c  %d \n", c, value);
         if(c=='i'){
             insert(map, value);
         }
@@ -52,15 +49,11 @@ int main(int argc, char** argv){
 }
 
 void insert(struct hash *map, int key){
-    // printf("Running\n");
     int index = hash(key);
-    // printf("%d \n", index);
     struct listnode *list = map->list[index];
     struct listnode *ptr = list;
-    // printf("Running\n");
     //Check for duplicate
     while(ptr != NULL){
-        // printf("ptr not null\n");
         if(ptr->value == key){
             printf("duplicate \n");
             return;
@@ -89,6 +82,10 @@ void search(struct hash* map, int key){
 }
 
 void clean(struct hash* map){
+    struct listnode** ptr = map->list;
+    for(int i = 0; i <map->size; i++){
+        free(ptr[i]);
+    }
     free(map);
 }
 

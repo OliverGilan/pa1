@@ -80,22 +80,9 @@ int * seperateEvenOdd(int *numbers,int size){
         }
     }
 
-    // for(int i=0; i<size; i++){
-    //     printf("EVEN: %d\n", even[i]);
-    // }
-    // for(int i=0; i<size; i++){
-    //     printf("ODD: %d\n", odd[i]);
-    // }
     //Sort both arrays
     even = sort(even, j);
     odd = sort(odd, k);
-
-    // for(int i=0; i<size; i++){
-    //     printf("EVEN: %d\n", even[i]);
-    // }
-    // for(int i=0; i<size; i++){
-    //     printf("ODD: %d\n", odd[i]);
-    // }
 
     //Combines both sorted arrays back into one array
     for(int i=0; i<j;i++){
@@ -118,7 +105,6 @@ int * sort(int *numbers, int size){
         for(int j=0; j<size-i-1;j++){
             if(numbers[j] > numbers[j+1]){
                 swap(&numbers[j],&numbers[j+1]);
-                // printf("SWAP %d <-> %d", numbers[j], numbers[j+1]);
             }
         }
     }

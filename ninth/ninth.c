@@ -26,7 +26,6 @@ int main(int argc, char **argv){
         return 0;
     }
 
-    // struct node* root = NULL;
     char c;
     int v;
     while(fscanf(input, "%c %d ", &c, &v) == 2){
@@ -50,7 +49,6 @@ int main(int argc, char **argv){
             }else{
                 delete(root, NULL, v);
             }
-            // printf("ROOT: %d\n", root->value);
         }
     }
 
@@ -82,10 +80,8 @@ struct node *insert(struct node *node, struct node *parent,int height, int value
 int search(struct node* root, int height, char c, int value){
     int r = 0;
     if(root == NULL){
-        // printf("absent\n");
         return 0;
     }else if(root->value == value){
-        // printf("present %d\n", height);
         return height;
     }else if(root->value > value){
         r = search(root->left, height+1, c, value);
@@ -97,13 +93,11 @@ int search(struct node* root, int height, char c, int value){
 
 void delete(struct node* node, struct node* parent, int value){
     if(node != NULL){
-        // printf("%d -> ", node->value);
         if(node->value == value){
             if(node->right != NULL && node ->left != NULL){
                 struct node* minimum = findMin(node->right);
                 node->value = minimum->value;
                 deleteChild(node->right, node, minimum->value);
-                // node->right = NULL;
                 printf("success\n");
                 return;
             }if(node->right == NULL){
@@ -124,9 +118,7 @@ void delete(struct node* node, struct node* parent, int value){
             }else{
                 if(parent == NULL){
                     root = node->right;
-                    // printf("ROOT REASSIGNED\n");
                     free(node);
-                    // printf("ROOT: %d\n", root->value);
                 }
                 else if(parent->value > value){
                     parent->left = node->right;
@@ -155,15 +147,12 @@ struct node* findMin(struct node * root){
 }
 
 void deleteChild(struct node* node, struct node* parent, int value){
-    // printf("DELETING: %d", value); 
     if(node != NULL){
-        // printf("%d -> ", node->value);
         if(node->value == value){
             if(node->right != NULL && node ->left != NULL){
                 struct node* minimum = findMin(node->right);
                 node->value = minimum->value;
                 deleteChild(node->right, node, minimum->value);
-                // node->right = NULL;
                 return;
             }if(node->right == NULL){
                 if(parent->value > value){
